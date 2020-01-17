@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.vistula.aplikacja"
+    },
+    "jhipsterVersion": "6.5.1",
+    "applicationType": "monolith",
+    "baseName": "aplikacja_dietetyczna",
+    "packageName": "com.vistula.aplikacja",
+    "packageFolder": "com/vistula/aplikacja",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "oracle",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "Njg5MDQzZmFmMTAwZWYwMWVhZmQ5ODIxNWM2YjdjMDcwNmY3YTFiZmM4YmE0NjJlZmU4NTM5OWYzNTRiMThhY2M1MDQ2NGE2ZDY2NjQwMThlZDgyNGRmOGM1NTExODc1ZTQ0ODc5MTU2ZTkyMWI1ODY3NjVmZTczM2UxMTI5NjE=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "minty",
+    "clientThemeVariant": "primary",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
+  }
+}
