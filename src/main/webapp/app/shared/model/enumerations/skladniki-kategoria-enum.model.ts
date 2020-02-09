@@ -1,0 +1,16 @@
+export const enum SkladnikiKategoriaEnum {
+  OWOCE = 'OWOCE',
+  WARZYWA = 'WARZYWA',
+  SERY = 'SERY',
+  PIECZYWO = 'PIECZYWO',
+  PRZYPRAWY = 'PRZYPRAWY',
+  ZBOZA = 'ZBOZA',
+  MIESO = 'MIESO',
+  SOSY = 'SOSY',
+  SOKI = 'SOKI',
+  ALKOHOLE = 'ALKOHOLE',
+  PIECZENIE = 'PIECZENIE',
+  RYBY = 'RYBY',
+  PIZZA = 'PIZZA',
+  NAPOJE = 'NAPOJE'
+}

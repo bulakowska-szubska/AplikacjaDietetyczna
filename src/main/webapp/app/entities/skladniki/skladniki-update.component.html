@@ -1,0 +1,83 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-skladniki-heading">Create or edit a Skladniki</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nazwa">Nazwa</label>
+                    <input type="text" class="form-control" name="nazwa" id="field_nazwa"
+                           formControlName="nazwa"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_zdjecie">Zdjecie</label>
+                    <div>
+                        <img [src]="'data:' + editForm.get('zdjecieContentType').value + ';base64,' + editForm.get('zdjecie').value" style="max-height: 100px;" *ngIf="editForm.get('zdjecie').value" alt="skladniki image"/>
+                        <div *ngIf="editForm.get('zdjecie').value" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{editForm.get('zdjecieContentType').value}}, {{byteSize(editForm.get('zdjecie').value)}}</span>
+                            <button type="button" (click)="clearInputImage('zdjecie', 'zdjecieContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_zdjecie" (change)="setFileData($event, 'zdjecie', true)" accept="image/*"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="zdjecie" id="field_zdjecie"
+                           formControlName="zdjecie"/>
+                    <input type="hidden" class="form-control" name="zdjecieContentType" id="field_zdjecieContentType"
+                           formControlName="zdjecieContentType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jednostka">Jednostka</label>
+                    <select class="form-control" name="jednostka" formControlName="jednostka" id="field_jednostka">
+                        <option value="GRAMY">GRAMY</option>
+                        <option value="MILILITRY">MILILITRY</option>
+                        <option value="SZTUKI">SZTUKI</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_kategoria">Kategoria</label>
+                    <select class="form-control" name="kategoria" formControlName="kategoria" id="field_kategoria">
+                        <option value="OWOCE">OWOCE</option>
+                        <option value="WARZYWA">WARZYWA</option>
+                        <option value="SERY">SERY</option>
+                        <option value="PIECZYWO">PIECZYWO</option>
+                        <option value="PRZYPRAWY">PRZYPRAWY</option>
+                        <option value="ZBOZA">ZBOZA</option>
+                        <option value="MIESO">MIESO</option>
+                        <option value="SOSY">SOSY</option>
+                        <option value="SOKI">SOKI</option>
+                        <option value="ALKOHOLE">ALKOHOLE</option>
+                        <option value="PIECZENIE">PIECZENIE</option>
+                        <option value="RYBY">RYBY</option>
+                        <option value="PIZZA">PIZZA</option>
+                        <option value="NAPOJE">NAPOJE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_kalorieSto">Kalorie Sto</label>
+                    <input type="number" class="form-control" name="kalorieSto" id="field_kalorieSto"
+                           formControlName="kalorieSto"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_kalorieJednostka">Kalorie Jednostka</label>
+                    <input type="number" class="form-control" name="kalorieJednostka" id="field_kalorieJednostka"
+                           formControlName="kalorieJednostka"/>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
