@@ -7,6 +7,10 @@ import { RouterModule } from '@angular/router';
       {
         path: 'skladniki',
         loadChildren: () => import('./skladniki/skladniki.module').then(m => m.AplikacjaDietetycznaSkladnikiModule)
+      },
+      {
+        path: 'przepis-skladniki',
+        loadChildren: () => import('./przepis-skladniki/przepis-skladniki.module').then(m => m.AplikacjaDietetycznaPrzepisSkladnikiModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

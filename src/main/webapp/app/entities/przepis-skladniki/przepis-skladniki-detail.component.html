@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="przepisSkladniki">
+            <h2><span>Przepis Skladniki</span> {{przepisSkladniki.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Ilosc</span></dt>
+                <dd>
+                    <span>{{przepisSkladniki.ilosc}}</span>
+                </dd>
+                <dt><span>Kalorie Ilosc</span></dt>
+                <dd>
+                    <span>{{przepisSkladniki.kalorieIlosc}}</span>
+                </dd>
+                <dt><span>Skladniki</span></dt>
+                <dd>
+                    <div *ngIf="przepisSkladniki.skladniki">
+                        <a [routerLink]="['/skladniki', przepisSkladniki.skladniki?.id, 'view']">{{przepisSkladniki.skladniki?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>User</span></dt>
+                <dd>
+                    {{przepisSkladniki.user?.login}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/przepis-skladniki', przepisSkladniki.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
