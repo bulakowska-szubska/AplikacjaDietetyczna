@@ -1,0 +1,65 @@
+<div class="jumbotron">
+    <div class="container">
+        <div class="col-md-6 offset-md-3">
+            <h1>Kalkulator BMR</h1>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                <div class="form-group">
+                    <label for="waga">Wpisz wagę [kg]</label>
+                    <input
+                        formControlName="waga"
+                        id="waga"
+                        type="number"
+                        class="form-control">
+                    <div *ngIf="f.waga.touched && f.waga.invalid" class="alert alert-danger">
+                        <div *ngIf="f.waga.errors.required">Wpisz wagę!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="wzrost">Wpisz wzrost [cm]</label>
+                    <input
+                        formControlName="wzrost"
+                        id="wzrost"
+                        type="number"
+                        class="form-control">
+                    <div *ngIf="f.wzrost.touched && f.wzrost.invalid" class="alert alert-danger">
+                        <div *ngIf="f.wzrost.errors.required">Wpisz wzrost!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="wiek">Wpisz wiek [lata]</label>
+                    <input
+                        formControlName="wiek"
+                        id="wiek"
+                        type="number"
+                        class="form-control">
+                    <div *ngIf="f.wiek.touched && f.wiek.invalid" class="alert alert-danger">
+                        <div *ngIf="f.wiek.errors.required">Wpisz wiek!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Wybierz płeć </label>
+                    <div class="row">
+                        <label class="md-check">
+                            <input type="radio" value="kobieta" name="plec" formControlName="plec">
+                            Kobieta
+                        </label>
+                        <label class="md-check">
+                            <input type="radio" value="mezczyzna" name="plec" formControlName="plec">
+                            Mężczyzna
+                        </label>
+                    </div>
+                </div>
+                <div *ngIf="submitted == true">
+                    <div class="form-group">
+                        <label>Twoje BMR wg równania Harris-Benedict'a wynosi:<br> {{bmrHarrisBenedict.toPrecision(6)}} kcal/dzień</label><br>
+                        <label>Twoje BMR wg równania  Mifflin St Jeor'a wynosi:<br> {{bmrMifflinStJeor.toPrecision(6)}} kcal/dzień</label><br>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Oblicz</button>
+                <button class="btn btn-info" type="button" (click)="resetValue()">Wyczyść</button>
+            </form>
+        </div>
+    </div>
+</div>
