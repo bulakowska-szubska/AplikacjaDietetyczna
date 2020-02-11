@@ -1,3 +1,54 @@
-<div>
-    <h2>Kontakt</h2>
+<div class="jumbotron">
+    <div class="container">
+        <div class="col-md-6 offset-md-3">
+            <h1>Formularz kontaktowy</h1>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                <div class="form-group">
+                    <label for="imieNazwisko">Wpisz imię i nazwisko</label>
+                    <input
+                        formControlName="imieNazwisko"
+                        id="imieNazwisko"
+                        type="text"
+                        class="form-control">
+                    <div *ngIf="f.imieNazwisko.touched && f.imieNazwisko.invalid" class="alert alert-danger">
+                        <div *ngIf="f.imieNazwisko.errors.required">Wpisz imię i nazwisko!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="temat">Wpisz temat</label>
+                    <input
+                        formControlName="temat"
+                        id="temat"
+                        type="text"
+                        class="form-control">
+                    <div *ngIf="f.temat.touched && f.temat.invalid" class="alert alert-danger">
+                        <div *ngIf="f.temat.errors.required">Wpisz temat!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Wpisz email</label>
+                    <input
+                        formControlName="email"
+                        id="email"
+                        type="text"
+                        class="form-control">
+                    <div *ngIf="f.email.touched && f.email.invalid" class="alert alert-danger">
+                        <div *ngIf="f.email.errors.required || f.email.touched">Wpisz email!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="textArea">Wpisz wiadomość</label>
+                    <textarea class="form-control" formControlName="textArea" id="textArea" rows="5"></textarea>
+                </div>
+                <div *ngIf="submitted == true">
+                    <div class="form-group">
+                        <label>Dziękujemy za przesłanie formularza kontaktowego!</label><br>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Wyślij</button>
+            </form>
+        </div>
+    </div>
 </div>
