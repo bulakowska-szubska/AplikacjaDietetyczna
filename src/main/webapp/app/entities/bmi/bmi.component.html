@@ -1,3 +1,44 @@
-<div>
-    <h2>BMI</h2>
+<div class="jumbotron">
+    <div class="container">
+        <div class="col-md-6 offset-md-3">
+            <h1>Kalkulator BMI</h1>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                <div class="form-group">
+                    <label for="waga">Wpisz wagę [kg]</label>
+                    <input
+                        formControlName="waga"
+                        id="waga"
+                        type="number"
+                        class="form-control">
+                    <div *ngIf="f.waga.touched && f.waga.invalid" class="alert alert-danger">
+                        <div *ngIf="f.waga.errors.required">Wpisz wagę!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="wzrost">Wpisz wzrost [cm]</label>
+                    <input
+                        formControlName="wzrost"
+                        id="wzrost"
+                        type="number"
+                        class="form-control">
+                    <div *ngIf="f.wzrost.touched && f.wzrost.invalid" class="alert alert-danger">
+                        <div *ngIf="f.wzrost.errors.required">Wpisz wzrost!</div>
+                    </div>
+                </div>
+                <div *ngIf="submitted == true">
+                    <div class="form-group">
+                        <label>Twoje BMI wynosi:<br> {{bmi.toPrecision(4)}}</label><br>
+                        <label>Kategoria:<br> {{kategoriaBmi}}</label><br>
+                        <label>Waga ciała:<br> {{wagaBmi}}</label><br>
+                        <label>Ryzyko chorób towarzyszących otyłości:<br> {{komunikatBmi}}</label><br>
+                        <img  class="images" src="/content/images/Body_mass_index_chart_pl.svg"/>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Oblicz</button>
+                <button class="btn btn-info" type="button" (click)="resetValue()">Wyczyść</button>
+            </form>
+        </div>
+    </div>
 </div>
