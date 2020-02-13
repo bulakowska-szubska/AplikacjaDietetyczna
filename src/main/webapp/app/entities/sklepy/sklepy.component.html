@@ -1,0 +1,23 @@
+<div>
+    <h3>Polecamy kupować zdrową, ekologiczną żywność w następujących sklepach w Warszawie:</h3>
+    <agm-map
+        [latitude]="szerokoscStart"
+        [longitude]="dlugoscStart"
+        [zoom]="przyblizenie"
+        [mapTypeId]="typMapy"
+        [disableDefaultUI]="false"
+        [zoomControl]="false">
+
+        <agm-marker
+            *ngFor="let m of znaczniki; let i = index"
+            [latitude]="m.szerokosc"
+            [longitude]="m.dlugosc"
+            [label]="m.opis"
+            [markerDraggable]="m.przeciaganie">
+
+            <agm-info-window>
+                <strong>Aplikacja Dietetyczna</strong>
+            </agm-info-window>
+        </agm-marker>
+    </agm-map>
+</div>
