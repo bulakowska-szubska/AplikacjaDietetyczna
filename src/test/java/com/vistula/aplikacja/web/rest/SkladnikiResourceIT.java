@@ -85,7 +85,7 @@ public class SkladnikiResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SkladnikiResource skladnikiResource = new SkladnikiResource(skladnikiService);
+        final SkladnikiResource skladnikiResource = new SkladnikiResource(skladnikiService, skladnikiRepository);
         this.restSkladnikiMockMvc = MockMvcBuilders.standaloneSetup(skladnikiResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -197,7 +197,7 @@ public class SkladnikiResourceIT {
             .andExpect(jsonPath("$.[*].kalorieSto").value(hasItem(DEFAULT_KALORIE_STO.doubleValue())))
             .andExpect(jsonPath("$.[*].kalorieJednostka").value(hasItem(DEFAULT_KALORIE_JEDNOSTKA.doubleValue())));
     }
-    
+
     @Test
     @Transactional
     public void getSkladniki() throws Exception {

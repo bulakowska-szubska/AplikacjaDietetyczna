@@ -130,4 +130,68 @@ export class SkladnikiComponent implements OnInit, OnDestroy {
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     this.skladnikis = data;
   }
+
+  getAllSkladniki() {
+    this.loadAll();
+  }
+
+  getAllAlkohole() {
+    this.skladnikiService.queryAllAlkohole().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllSoki() {
+    this.skladnikiService.queryAllSoki().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllMieso() {
+    this.skladnikiService.queryAllMieso().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllNapoje() {
+    this.skladnikiService.queryAllNapoje().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllOwoce() {
+    this.skladnikiService.queryAllOwoce().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllPieczenie() {
+    this.skladnikiService
+      .queryAllPieczenie()
+      .subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllPieczywo() {
+    this.skladnikiService.queryAllPieczywo().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllPizza() {
+    this.skladnikiService.queryAllPizza().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllPrzyprawy() {
+    this.skladnikiService
+      .queryAllPrzyprawy()
+      .subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllRyby() {
+    this.skladnikiService.queryAllRyby().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllSery() {
+    this.skladnikiService.queryAllSery().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllSosy() {
+    this.skladnikiService.queryAllSosy().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllWarzywa() {
+    this.skladnikiService.queryAllWarzywa().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  getAllZboza() {
+    this.skladnikiService.queryAllZboza().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
 }

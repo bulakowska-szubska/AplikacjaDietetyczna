@@ -1,18 +1,63 @@
 <div>
     <h2 id="page-heading">
-        <span>Skladnikis</span>
+        <span>Lista składników wraz z ich kalorycznością</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-skladniki" [routerLink]="['/skladniki/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create a new Skladniki
+            Dodaj nowy składknik
             </span>
+        </button><br>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllSkladniki()">
+            <span class="d-none d-md-inline">Wyświetl wszystkie</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllWarzywa()">
+            <span class="d-none d-md-inline">Warzywa</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllOwoce()">
+            <span class="d-none d-md-inline">Owoce</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllAlkohole()">
+            <span class="d-none d-md-inline">Alkohole</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllMieso()">
+            <span class="d-none d-md-inline">Mięso</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllNapoje()">
+            <span class="d-none d-md-inline">Napoje</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllPieczenie()">
+            <span class="d-none d-md-inline">Pieczenie</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllPieczywo()">
+            <span class="d-none d-md-inline">Pieczywo</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllPizza()">
+            <span class="d-none d-md-inline">Pizza</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllPrzyprawy()">
+            <span class="d-none d-md-inline">Przyprawy</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllRyby()">
+            <span class="d-none d-md-inline">Ryby</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllSery()">
+            <span class="d-none d-md-inline">Sery</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllSoki()">
+            <span class="d-none d-md-inline">Soki</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllSosy()">
+            <span class="d-none d-md-inline">Sosy</span>
+        </button>
+        <button type="submit" class="btn btn-info btn-sm" (click)="getAllZboza()">
+            <span class="d-none d-md-inline">Zboża</span>
         </button>
     </h2>
     <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="alert alert-warning" *ngIf="skladnikis?.length === 0">
-        <span>No skladnikis found</span>
+        <span>Nie znaleziono żadnego składnika</span>
     </div>
     <div class="table-responsive" *ngIf="skladnikis?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
@@ -20,10 +65,10 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="nazwa"><span>Nazwa</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="zdjecie"><span>Zdjecie</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="zdjecie"><span>Zdjęcie</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="jednostka"><span>Jednostka</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="kategoria"><span>Kategoria</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="kalorieSto"><span>Kalorie Sto</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="kalorieSto"><span>Ilość kalorii [100 / sztuka]</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="kalorieJednostka"><span>Kalorie Jednostka</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"></th>
             </tr>
@@ -36,7 +81,7 @@
                     <a *ngIf="skladniki.zdjecie" (click)="openFile(skladniki.zdjecieContentType, skladniki.zdjecie)">
                         <img [src]="'data:' + skladniki.zdjecieContentType + ';base64,' + skladniki.zdjecie" style="max-height: 30px;" alt="skladniki image"/>
                     </a>
-                    <span *ngIf="skladniki.zdjecie">{{skladniki.zdjecieContentType}}, {{byteSize(skladniki.zdjecie)}}</span>
+                    <span *ngIf="skladniki.zdjecie"></span>
                 </td>
                 <td>{{skladniki.jednostka}}</td>
                 <td>{{skladniki.kategoria}}</td>
@@ -48,18 +93,18 @@
                                 [routerLink]="['/skladniki', skladniki.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
+                            <span class="d-none d-md-inline">Zobacz</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/skladniki', skladniki.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
+                            <span class="d-none d-md-inline">Edytuj</span>
                         </button>
                         <button type="submit" (click)="delete(skladniki)"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
+                            <span class="d-none d-md-inline">Usuń</span>
                         </button>
                     </div>
                 </td>

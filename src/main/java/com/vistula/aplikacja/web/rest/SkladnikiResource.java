@@ -1,6 +1,8 @@
 package com.vistula.aplikacja.web.rest;
 
 import com.vistula.aplikacja.domain.Skladniki;
+import com.vistula.aplikacja.domain.enumeration.SkladnikiKategoriaEnum;
+import com.vistula.aplikacja.repository.SkladnikiRepository;
 import com.vistula.aplikacja.service.SkladnikiService;
 import com.vistula.aplikacja.web.rest.errors.BadRequestAlertException;
 
@@ -39,9 +41,12 @@ public class SkladnikiResource {
     private String applicationName;
 
     private final SkladnikiService skladnikiService;
+    private final SkladnikiRepository skladnikiRepository;
 
-    public SkladnikiResource(SkladnikiService skladnikiService) {
+    public SkladnikiResource(SkladnikiService skladnikiService,
+                             SkladnikiRepository skladnikiRepository) {
         this.skladnikiService = skladnikiService;
+        this.skladnikiRepository = skladnikiRepository;
     }
 
     /**
@@ -96,6 +101,126 @@ public class SkladnikiResource {
     public ResponseEntity<List<Skladniki>> getAllSkladnikis(Pageable pageable) {
         log.debug("REST request to get a page of Skladnikis");
         Page<Skladniki> page = skladnikiService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /skladniki/{kategoria}} : get all produkty from SkladnikiKategoriaEnum.{kategoria}.
+     *
+
+     * @param pageable the pagination information.
+
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of skladnikis in body.
+     */
+    @GetMapping("/skladniki/alkohole")
+    public ResponseEntity<List<Skladniki>> getAllAlkohole(Pageable pageable) {
+        log.debug("REST request to get a page of Alkohole from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.ALKOHOLE, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/soki")
+    public ResponseEntity<List<Skladniki>> getAllSoki(Pageable pageable) {
+        log.debug("REST request to get a page of Soki from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.SOKI, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/napoje")
+    public ResponseEntity<List<Skladniki>> getAllNapoje(Pageable pageable) {
+        log.debug("REST request to get a page of Napoje from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.NAPOJE, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/pizza")
+    public ResponseEntity<List<Skladniki>> getAllPizza(Pageable pageable) {
+        log.debug("REST request to get a page of Pizza from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.PIZZA, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/ryby")
+    public ResponseEntity<List<Skladniki>> getAllRyby(Pageable pageable) {
+        log.debug("REST request to get a page of Ryby from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.RYBY, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/pieczenie")
+    public ResponseEntity<List<Skladniki>> getAllPieczenie(Pageable pageable) {
+        log.debug("REST request to get a page of Pieczenie from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.PIECZENIE, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/sosy")
+    public ResponseEntity<List<Skladniki>> getAllSosy(Pageable pageable) {
+        log.debug("REST request to get a page of Sosy from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.SOSY, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/mieso")
+    public ResponseEntity<List<Skladniki>> getAllMieso(Pageable pageable) {
+        log.debug("REST request to get a page of Mieso from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.MIESO, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/zboza")
+    public ResponseEntity<List<Skladniki>> getAllZboza(Pageable pageable) {
+        log.debug("REST request to get a page of Zboza from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.ZBOZA, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/przyprawy")
+    public ResponseEntity<List<Skladniki>> getAllPrzyprawy(Pageable pageable) {
+        log.debug("REST request to get a page of Przyprawy from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.PRZYPRAWY, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/pieczywo")
+    public ResponseEntity<List<Skladniki>> getAllPieczywo(Pageable pageable) {
+        log.debug("REST request to get a page of Pieczywo from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.PIECZYWO, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/sery")
+    public ResponseEntity<List<Skladniki>> getAllSery(Pageable pageable) {
+        log.debug("REST request to get a page of Sery from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.SERY, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/warzywa")
+    public ResponseEntity<List<Skladniki>> getAllWarzywa(Pageable pageable) {
+        log.debug("REST request to get a page of Warzywa from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.WARZYWA, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/skladniki/owoce")
+    public ResponseEntity<List<Skladniki>> getAllOwoce(Pageable pageable) {
+        log.debug("REST request to get a page of Owoce from Skladniki");
+        Page<Skladniki> page = skladnikiRepository.findAllByKategoria(SkladnikiKategoriaEnum.OWOCE, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -6,7 +6,7 @@ export const BmiRoute: Routes = [
     path: '',
     component: BmiComponent,
     data: {
-      pageTitle: 'BMI'
+      pageTitle: 'Kalkulator BMI'
     }
   }
 ];
