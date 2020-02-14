@@ -125,3 +125,9 @@ jhipster:
 # ===================================================================
 
 # application:
+mail: #SMTP properties
+  username: 'aplikacja.dietetyczna.jabluszko@gmail.com'
+  port: '587'
+  hostname: 'smtp.gmail.com'
+  password: ''
+  aplikacjaEmailAdress: 'aplikacja.dietetyczna.jabluszko@gmail.com'
