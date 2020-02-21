@@ -1,4 +1,5 @@
 package com.vistula.aplikacja.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -42,6 +43,10 @@ public class Przepis implements Serializable {
 
     @Column(name = "kalorie_suma")
     private Double kalorieSuma;
+
+    @ManyToOne
+    @JsonIgnoreProperties("przepis")
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -128,6 +133,19 @@ public class Przepis implements Serializable {
 
     public void setKalorieSuma(Double kalorieSuma) {
         this.kalorieSuma = kalorieSuma;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Przepis user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

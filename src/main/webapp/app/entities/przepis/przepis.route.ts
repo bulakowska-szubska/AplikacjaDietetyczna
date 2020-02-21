@@ -35,7 +35,7 @@ export const przepisRoute: Routes = [
     data: {
       authorities: ['ROLE_USER'],
       defaultSort: 'id,asc',
-      pageTitle: 'Przepisy'
+      pageTitle: 'Przepis'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -47,7 +47,7 @@ export const przepisRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'Przepisy'
+      pageTitle: 'Przepis'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -59,7 +59,7 @@ export const przepisRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'Przepisy'
+      pageTitle: 'Przepis'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -71,7 +71,7 @@ export const przepisRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'Przepisy'
+      pageTitle: 'Przepis'
     },
     canActivate: [UserRouteAccessService]
   }

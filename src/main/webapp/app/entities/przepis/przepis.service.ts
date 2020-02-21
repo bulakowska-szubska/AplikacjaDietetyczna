@@ -12,11 +12,16 @@ type EntityArrayResponseType = HttpResponse<IPrzepis[]>;
 @Injectable({ providedIn: 'root' })
 export class PrzepisService {
   public resourceUrl = SERVER_API_URL + 'api/przepis';
+  private resourceUrlUserPrzepis = SERVER_API_URL + 'api/add-przepis-by-user';
 
   constructor(protected http: HttpClient) {}
 
   create(przepis: IPrzepis): Observable<EntityResponseType> {
     return this.http.post<IPrzepis>(this.resourceUrl, przepis, { observe: 'response' });
+  }
+
+  createUserPrzepis(przepis: IPrzepis): Observable<EntityResponseType> {
+    return this.http.post<IPrzepis>(this.resourceUrlUserPrzepis, przepis, { observe: 'response' });
   }
 
   update(przepis: IPrzepis): Observable<EntityResponseType> {

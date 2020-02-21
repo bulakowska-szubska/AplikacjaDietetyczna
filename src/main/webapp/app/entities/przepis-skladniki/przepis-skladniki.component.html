@@ -13,7 +13,8 @@
         <button id="dodaj-do-przepisu"
                 *jhiHasAnyAuthority="'ROLE_USER'"
                 class="btn btn-success float-right jh-create-entity create-przepis-skladniki"
-                [routerLink]="['/przepis-skladniki/new']">
+                (click)="dodajPrzepis()"
+                [routerLink]="['/przepis']">
             <fa-icon [icon]="'utensils'"></fa-icon>
             <span >
             Dodaj wszystkie składniki do przepisu

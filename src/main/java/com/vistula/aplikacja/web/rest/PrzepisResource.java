@@ -1,7 +1,11 @@
 package com.vistula.aplikacja.web.rest;
 
 import com.vistula.aplikacja.domain.Przepis;
+import com.vistula.aplikacja.domain.PrzepisSkladniki;
+import com.vistula.aplikacja.domain.User;
 import com.vistula.aplikacja.service.PrzepisService;
+import com.vistula.aplikacja.service.PrzepisSkladnikiService;
+import com.vistula.aplikacja.service.UserService;
 import com.vistula.aplikacja.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -21,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,11 +43,19 @@ public class PrzepisResource {
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
-
+    private UserService userService;
     private final PrzepisService przepisService;
+    private final PrzepisSkladnikiService przepisSkladnikiService;
+    private final PrzepisSkladnikiResource przepisSkladnikiResource;
 
-    public PrzepisResource(PrzepisService przepisService) {
+    public PrzepisResource(UserService userService,
+                           PrzepisService przepisService,
+                           PrzepisSkladnikiService przepisSkladnikiService,
+                           PrzepisSkladnikiResource przepisSkladnikiResource) {
+        this.userService = userService;
         this.przepisService = przepisService;
+        this.przepisSkladnikiService = przepisSkladnikiService;
+        this.przepisSkladnikiResource = przepisSkladnikiResource;
     }
 
     /**
@@ -58,6 +72,55 @@ public class PrzepisResource {
             throw new BadRequestAlertException("A new przepis cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Przepis result = przepisService.save(przepis);
+        return ResponseEntity.created(new URI("/api/przepis/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code POST  /przepis} : Create a new przepis.
+     *
+     * @param przepis the przepis to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new przepis, or with status {@code 400 (Bad Request)} if the przepis has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/add-przepis-by-user")
+    public ResponseEntity<Przepis> createPrzepis(Principal principal, @RequestBody Przepis przepis) throws URISyntaxException {
+        log.debug("REST request to save przepis : {}", przepis);
+        double sumaKalorii = 0.0;
+
+        if (przepis.getId() != null) {
+            throw new BadRequestAlertException("A new przepis cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        Optional<User> user = userService.getUserWithAuthoritiesByLogin(principal.getName());
+        if(user.isPresent()){
+            przepis.setUser(user.get());
+        }
+
+        List<PrzepisSkladniki> przepisSkladnikiList = przepisSkladnikiService.findAllByUser(user);
+
+        for (PrzepisSkladniki przepisSkladniki: przepisSkladnikiList){
+            PrzepisSkladniki przepisSkladnik = new PrzepisSkladniki();
+            przepisSkladnik.setKalorieIlosc(przepisSkladniki.getKalorieIlosc());
+            sumaKalorii = sumaKalorii + przepisSkladnik.getKalorieIlosc();
+            log.info("sumaKalorii.toString()");
+            log.info(Double.toString(sumaKalorii));
+        }
+        przepis.setKalorieSuma(sumaKalorii);
+        Przepis result = przepisService.save(przepis);
+        Long przepisId = przepis.getId();
+
+        for (PrzepisSkladniki przepisSkladniki: przepisSkladnikiList){
+            PrzepisSkladniki przepisSkladnik = new PrzepisSkladniki();
+
+            przepisSkladnik.setKalorieIlosc(przepisSkladniki.getKalorieIlosc());
+            przepisSkladnik.setUser(przepisSkladniki.getUser());
+            przepisSkladnik.setSkladniki(przepisSkladniki.getSkladniki());
+            przepisSkladnik.setPrzepisId(przepisId);
+
+            przepisSkladnikiResource.createPrzepisSkladniki(przepisSkladnik);
+            przepisSkladnikiResource.deletePrzepisSkladniki(przepisSkladniki.getId());
+        }
         return ResponseEntity.created(new URI("/api/przepis/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);

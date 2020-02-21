@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -65,6 +66,18 @@ public class PrzepisSkladnikiServiceImpl implements PrzepisSkladnikiService {
     public Page<PrzepisSkladniki> findAllByUser(Pageable pageable, Optional<User> user) {
         log.debug("Request to get all PrzepisSkladniki for one User");
         return przepisSkladnikiRepository.findAllByUser(pageable, user);
+    }
+
+    /**
+     * Get list of the przepisSkladniki for one User.
+     *
+     * @return the list of przepisSkladniki.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<PrzepisSkladniki> findAllByUser(Optional<User> user) {
+        log.debug("Request to get list of the PrzepisSkladniki for one User");
+        return przepisSkladnikiRepository.findAllByUser(user);
     }
 
 

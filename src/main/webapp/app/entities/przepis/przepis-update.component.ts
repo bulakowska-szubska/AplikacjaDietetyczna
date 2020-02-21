@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IPrzepis, Przepis } from 'app/shared/model/przepis.model';
 import { PrzepisService } from './przepis.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-przepis-update',
@@ -16,6 +18,8 @@ import { PrzepisService } from './przepis.service';
 export class PrzepisUpdateComponent implements OnInit {
   isSaving: boolean;
 
+  users: IUser[];
+
   editForm = this.fb.group({
     id: [],
     nazwa: [],
@@ -23,13 +27,15 @@ export class PrzepisUpdateComponent implements OnInit {
     zdjecie: [],
     zdjecieContentType: [],
     opis: [],
-    kalorieSuma: []
+    kalorieSuma: [],
+    user: []
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
     protected jhiAlertService: JhiAlertService,
     protected przepisService: PrzepisService,
+    protected userService: UserService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -40,6 +46,9 @@ export class PrzepisUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ przepis }) => {
       this.updateForm(przepis);
     });
+    this.userService
+      .query()
+      .subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(przepis: IPrzepis) {
@@ -50,7 +59,8 @@ export class PrzepisUpdateComponent implements OnInit {
       zdjecie: przepis.zdjecie,
       zdjecieContentType: przepis.zdjecieContentType,
       opis: przepis.opis,
-      kalorieSuma: przepis.kalorieSuma
+      kalorieSuma: przepis.kalorieSuma,
+      user: przepis.user
     });
   }
 
@@ -120,7 +130,8 @@ export class PrzepisUpdateComponent implements OnInit {
       zdjecieContentType: this.editForm.get(['zdjecieContentType']).value,
       zdjecie: this.editForm.get(['zdjecie']).value,
       opis: this.editForm.get(['opis']).value,
-      kalorieSuma: this.editForm.get(['kalorieSuma']).value
+      kalorieSuma: this.editForm.get(['kalorieSuma']).value,
+      user: this.editForm.get(['user']).value
     };
   }
 
@@ -138,5 +149,9 @@ export class PrzepisUpdateComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  trackUserById(index: number, item: IUser) {
+    return item.id;
   }
 }

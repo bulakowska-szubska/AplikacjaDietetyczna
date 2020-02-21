@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,9 @@ import { IPrzepisSkladniki } from 'app/shared/model/przepis-skladniki.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PrzepisSkladnikiService } from './przepis-skladniki.service';
 import { PrzepisSkladnikiDeleteDialogComponent } from './przepis-skladniki-delete-dialog.component';
+import { Przepis } from 'app/shared/model/przepis.model';
+import { PrzepisService } from 'app/entities/przepis/przepis.service';
+import { TypPrzepisuEnum } from 'app/shared/model/enumerations/typ-przepisu-enum.model';
 
 @Component({
   selector: 'jhi-przepis-skladniki',
@@ -35,7 +38,8 @@ export class PrzepisSkladnikiComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected przepisService: PrzepisService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -120,5 +124,13 @@ export class PrzepisSkladnikiComponent implements OnInit, OnDestroy {
     this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     this.przepisSkladnikis = data;
+  }
+
+  dodajPrzepis() {
+    let przepis = new Przepis();
+    przepis.nazwa = 'Test';
+    przepis.opis = 'Dupa';
+    przepis.typPrzepisu = TypPrzepisuEnum.STANDARDOWY;
+    this.przepisService.createUserPrzepis(przepis).subscribe();
   }
 }

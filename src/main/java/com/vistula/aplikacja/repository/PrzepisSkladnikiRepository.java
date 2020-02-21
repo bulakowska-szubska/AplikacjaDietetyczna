@@ -20,4 +20,6 @@ public interface PrzepisSkladnikiRepository extends JpaRepository<PrzepisSkladni
     List<PrzepisSkladniki> findByUserIsCurrentUser();
 
     Page<PrzepisSkladniki> findAllByUser(Pageable pageable, Optional<User> user);
+
+    List<PrzepisSkladniki> findAllByUser(Optional<User> user);
 }

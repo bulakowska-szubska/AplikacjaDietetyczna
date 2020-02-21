@@ -4,6 +4,8 @@ import com.vistula.aplikacja.AplikacjaDietetycznaApp;
 import com.vistula.aplikacja.domain.Przepis;
 import com.vistula.aplikacja.repository.PrzepisRepository;
 import com.vistula.aplikacja.service.PrzepisService;
+import com.vistula.aplikacja.service.PrzepisSkladnikiService;
+import com.vistula.aplikacja.service.UserService;
 import com.vistula.aplikacja.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -60,6 +62,15 @@ public class PrzepisResourceIT {
     private PrzepisService przepisService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PrzepisSkladnikiService przepisSkladnikiService;
+
+    @Autowired
+    private PrzepisSkladnikiResource przepisSkladnikiResource;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -81,7 +92,7 @@ public class PrzepisResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PrzepisResource przepisResource = new PrzepisResource(przepisService);
+        final PrzepisResource przepisResource = new PrzepisResource(userService, przepisService, przepisSkladnikiService, przepisSkladnikiResource);
         this.restPrzepisMockMvc = MockMvcBuilders.standaloneSetup(przepisResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -189,7 +200,7 @@ public class PrzepisResourceIT {
             .andExpect(jsonPath("$.[*].opis").value(hasItem(DEFAULT_OPIS)))
             .andExpect(jsonPath("$.[*].kalorieSuma").value(hasItem(DEFAULT_KALORIE_SUMA.doubleValue())));
     }
-    
+
     @Test
     @Transactional
     public void getPrzepis() throws Exception {

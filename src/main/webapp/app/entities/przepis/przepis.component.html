@@ -24,6 +24,7 @@
             <th scope="col"  jhiSortBy="zdjecie"><span>Zdjecie</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="opis"><span>Opis</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="kalorieSuma"><span>Kalorie Suma</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="user.login"><span>User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -40,6 +41,9 @@
                 </td>
                 <td>{{przepis.opis}}</td>
                 <td>{{przepis.kalorieSuma}}</td>
+                <td>
+                    {{przepis.user?.login}}
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"
