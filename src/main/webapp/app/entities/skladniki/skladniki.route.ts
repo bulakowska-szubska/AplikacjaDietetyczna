@@ -35,7 +35,7 @@ export const skladnikiRoute: Routes = [
     data: {
       authorities: ['ROLE_USER'],
       defaultSort: 'id,asc',
-      pageTitle: 'Skladnikis'
+      pageTitle: 'Składniki'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -47,7 +47,7 @@ export const skladnikiRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'Skladnikis'
+      pageTitle: 'Składniki'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -59,7 +59,7 @@ export const skladnikiRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'Skladnikis'
+      pageTitle: 'Składniki'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -71,7 +71,7 @@ export const skladnikiRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'Skladnikis'
+      pageTitle: 'Składniki'
     },
     canActivate: [UserRouteAccessService]
   }

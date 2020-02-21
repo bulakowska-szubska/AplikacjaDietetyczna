@@ -35,7 +35,7 @@ export const przepisSkladnikiRoute: Routes = [
     data: {
       authorities: ['ROLE_USER'],
       defaultSort: 'id,asc',
-      pageTitle: 'PrzepisSkladnikis'
+      pageTitle: 'Składniki Przepisu'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -47,7 +47,7 @@ export const przepisSkladnikiRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'PrzepisSkladnikis'
+      pageTitle: 'Składniki Przepisu'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -59,7 +59,7 @@ export const przepisSkladnikiRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'PrzepisSkladnikis'
+      pageTitle: 'Składniki Przepisu'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -71,7 +71,7 @@ export const przepisSkladnikiRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'PrzepisSkladnikis'
+      pageTitle: 'Składniki Przepisu'
     },
     canActivate: [UserRouteAccessService]
   }

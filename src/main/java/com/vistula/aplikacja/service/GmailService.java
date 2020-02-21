@@ -29,8 +29,8 @@ public class GmailService {
     @Value("${mail.aplikacjaEmailAdress}")
     private String aplikacjaEmailAdress;
 
-    public void sendEmailWithAttachedFiles(String host, String port, String username, String password,
-                                           String toAddress, String subject, String message, String[] attachedFiles)
+    public void sendEmailFromGmail(String host, String port, String username, String password,
+                                   String toAddress, String subject, String message, String[] attachedFiles)
         throws MessagingException {
         // SMTP właściwości
         Properties emailProperties = new Properties();
@@ -91,7 +91,7 @@ public class GmailService {
         attachFiles[0] = ""; //todo wstaw ścieżke do pliku tu rozwiązanie dla 1 załącznika
 
         try {
-            sendEmailWithAttachedFiles(hostname, port, aplikacjaEmailAdress, password, aplikacjaEmailAdress,
+            sendEmailFromGmail(hostname, port, aplikacjaEmailAdress, password, aplikacjaEmailAdress,
                 subject, message, attachFiles);
             log.info("Twój email został wysłany!");
         } catch (Exception ex) {
@@ -116,7 +116,7 @@ public class GmailService {
         String messageSubject = imieNazwisko + " : " + temat;
 
         try {
-            sendEmailWithAttachedFiles(hostname, port, username, password, aplikacjaEmailAdress,
+            sendEmailFromGmail(hostname, port, username, password, aplikacjaEmailAdress,
                 messageSubject, content, null);
             log.info("Twój email został wysłany.");
         } catch (Exception ex) {

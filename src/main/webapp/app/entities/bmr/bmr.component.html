@@ -53,8 +53,10 @@
                 </div>
                 <div *ngIf="submitted == true">
                     <div class="form-group">
-                        <label>Twoje BMR wg równania Harris-Benedict'a wynosi:<br> {{bmrHarrisBenedict.toPrecision(6)}} kcal/dzień</label><br>
-                        <label>Twoje BMR wg równania  Mifflin St Jeor'a wynosi:<br> {{bmrMifflinStJeor.toPrecision(6)}} kcal/dzień</label><br>
+                        <label>Twoje BMR wg równania Harris-Benedict'a wynosi:
+                            <br> {{bmrHarrisBenedict.toPrecision(6)}} kcal/dzień</label><br>
+                        <label>Twoje BMR wg równania  Mifflin St Jeor'a wynosi:
+                            <br> {{bmrMifflinStJeor.toPrecision(6)}} kcal/dzień</label><br>
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit">Oblicz</button>
