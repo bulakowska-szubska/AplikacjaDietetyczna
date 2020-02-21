@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
-import { IPrzepisSkladniki } from 'app/shared/model/przepis-skladniki.model';
+import { IPrzepisSkladniki, PrzepisSkladniki } from 'app/shared/model/przepis-skladniki.model';
+import { ISkladniki } from 'app/shared/model/skladniki.model';
 
 type EntityResponseType = HttpResponse<IPrzepisSkladniki>;
 type EntityArrayResponseType = HttpResponse<IPrzepisSkladniki[]>;
@@ -12,11 +13,25 @@ type EntityArrayResponseType = HttpResponse<IPrzepisSkladniki[]>;
 @Injectable({ providedIn: 'root' })
 export class PrzepisSkladnikiService {
   public resourceUrl = SERVER_API_URL + 'api/przepis-skladnikis';
+  public resourceUrlSkladnikPrzepisForUser = SERVER_API_URL + 'api/przepis-skladniki-user';
 
   constructor(protected http: HttpClient) {}
 
   create(przepisSkladniki: IPrzepisSkladniki): Observable<EntityResponseType> {
     return this.http.post<IPrzepisSkladniki>(this.resourceUrl, przepisSkladniki, { observe: 'response' });
+  }
+
+  createPrzepisSkladnikRecordForUser(przepisSkladniki: IPrzepisSkladniki): Observable<EntityResponseType> {
+    return this.http.post<IPrzepisSkladniki>(this.resourceUrlSkladnikPrzepisForUser, przepisSkladniki, { observe: 'response' });
+  }
+
+  createPrzepisSkladnikRecord(skladnik: ISkladniki, ilosc: number) {
+    let przepisSkladniki = new PrzepisSkladniki();
+
+    przepisSkladniki.skladniki = skladnik;
+    przepisSkladniki.ilosc = ilosc;
+    przepisSkladniki.kalorieIlosc = skladnik.kalorieJednostka * ilosc;
+    this.createPrzepisSkladnikRecordForUser(przepisSkladniki).subscribe();
   }
 
   update(przepisSkladniki: IPrzepisSkladniki): Observable<EntityResponseType> {

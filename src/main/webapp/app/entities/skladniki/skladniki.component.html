@@ -70,6 +70,7 @@
             <th scope="col"  jhiSortBy="kategoria"><span>Kategoria</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="kalorieSto"><span>Ilość kalorii [100 / sztuka]</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="kalorieJednostka"><span>Kalorie Jednostka</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"><span>Ilość [g|ml|szt]</span></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -87,8 +88,15 @@
                 <td>{{skladniki.kategoria}}</td>
                 <td>{{skladniki.kalorieSto}}</td>
                 <td>{{skladniki.kalorieJednostka}}</td>
+                <td><input class="form-control" type="number" [formControl]="ilosc"></td>
                 <td class="text-right">
                     <div class="btn-group">
+                        <button type="submit"
+                                class="btn btn-success btn-sm"
+                        (click)="dodajSkladnikiDoKoszyka(skladniki, ilosc.value)">
+                            <fa-icon [icon]="'plus'"></fa-icon>
+                            <span class="d-none d-md-inline">Dodaj</span>
+                        </button>
                         <button type="submit"
                                 [routerLink]="['/skladniki', skladniki.id, 'view' ]"
                                 class="btn btn-info btn-sm">

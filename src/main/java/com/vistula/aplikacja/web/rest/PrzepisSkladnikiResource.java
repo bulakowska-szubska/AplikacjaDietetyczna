@@ -1,7 +1,9 @@
 package com.vistula.aplikacja.web.rest;
 
 import com.vistula.aplikacja.domain.PrzepisSkladniki;
+import com.vistula.aplikacja.domain.User;
 import com.vistula.aplikacja.service.PrzepisSkladnikiService;
+import com.vistula.aplikacja.service.UserService;
 import com.vistula.aplikacja.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,9 +42,11 @@ public class PrzepisSkladnikiResource {
     private String applicationName;
 
     private final PrzepisSkladnikiService przepisSkladnikiService;
-
-    public PrzepisSkladnikiResource(PrzepisSkladnikiService przepisSkladnikiService) {
+    private UserService userService;
+    public PrzepisSkladnikiResource(PrzepisSkladnikiService przepisSkladnikiService,
+                                    UserService userService) {
         this.przepisSkladnikiService = przepisSkladnikiService;
+        this.userService = userService;
     }
 
     /**
@@ -56,6 +61,29 @@ public class PrzepisSkladnikiResource {
         log.debug("REST request to save PrzepisSkladniki : {}", przepisSkladniki);
         if (przepisSkladniki.getId() != null) {
             throw new BadRequestAlertException("A new przepisSkladniki cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        PrzepisSkladniki result = przepisSkladnikiService.save(przepisSkladniki);
+        return ResponseEntity.created(new URI("/api/przepis-skladnikis/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code POST  /przepis-skladniki-user} : Create a new record of przepisSkladniki for User.
+     *
+     * @param przepisSkladniki the przepisSkladniki to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new przepisSkladniki, or with status {@code 400 (Bad Request)} if the przepisSkladniki has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/przepis-skladniki-user")
+    public ResponseEntity<PrzepisSkladniki> createPrzepisSkladnikiForUser(Principal principal, @RequestBody PrzepisSkladniki przepisSkladniki) throws URISyntaxException {
+        log.debug("REST request to save a new record of PrzepisSkladniki for User : {}", przepisSkladniki);
+        if (przepisSkladniki.getId() != null) {
+            throw new BadRequestAlertException("A new przepisSkladniki cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        Optional<User> user = userService.getUserWithAuthoritiesByLogin(principal.getName());
+        if(user.isPresent()){
+            przepisSkladniki.setUser(user.get());
         }
         PrzepisSkladniki result = przepisSkladnikiService.save(przepisSkladniki);
         return ResponseEntity.created(new URI("/api/przepis-skladnikis/" + result.getId()))

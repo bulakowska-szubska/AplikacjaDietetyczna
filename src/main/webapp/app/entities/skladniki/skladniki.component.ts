@@ -10,6 +10,8 @@ import { ISkladniki } from 'app/shared/model/skladniki.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { SkladnikiService } from './skladniki.service';
 import { SkladnikiDeleteDialogComponent } from './skladniki-delete-dialog.component';
+import { FormControl, Validators } from '@angular/forms';
+import { PrzepisSkladnikiService } from 'app/entities/przepis-skladniki/przepis-skladniki.service';
 
 @Component({
   selector: 'jhi-skladniki',
@@ -28,6 +30,7 @@ export class SkladnikiComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  ilosc = new FormControl(1, [Validators.required, Validators.min(1), Validators.pattern('^(0|[1-9][0-9]*)$')]);
 
   constructor(
     protected skladnikiService: SkladnikiService,
@@ -36,7 +39,8 @@ export class SkladnikiComponent implements OnInit, OnDestroy {
     protected dataUtils: JhiDataUtils,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected przepisSkladnikiService: PrzepisSkladnikiService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -193,5 +197,9 @@ export class SkladnikiComponent implements OnInit, OnDestroy {
 
   getAllZboza() {
     this.skladnikiService.queryAllZboza().subscribe((res: HttpResponse<ISkladniki[]>) => this.paginateSkladnikis(res.body, res.headers));
+  }
+
+  dodajSkladnikiDoKoszyka(skladnik: ISkladniki, ilosc: number) {
+    this.przepisSkladnikiService.createPrzepisSkladnikRecord(skladnik, ilosc);
   }
 }
