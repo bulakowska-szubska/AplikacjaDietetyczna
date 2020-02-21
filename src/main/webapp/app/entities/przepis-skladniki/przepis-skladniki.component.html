@@ -1,10 +1,22 @@
 <div>
     <h2 id="page-heading">
-        <span>Przepis Skladnikis</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-przepis-skladniki" [routerLink]="['/przepis-skladniki/new']">
+        <span>Składniki Przepisu</span>
+        <button id="jh-create-entity"
+                *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                class="btn btn-primary float-right jh-create-entity create-przepis-skladniki"
+                [routerLink]="['/przepis-skladniki/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create a new Przepis Skladniki
+            Dodaj nowy składnik przepisu
+            </span>
+        </button>
+        <button id="dodaj-do-przepisu"
+                *jhiHasAnyAuthority="'ROLE_USER'"
+                class="btn btn-success float-right jh-create-entity create-przepis-skladniki"
+                [routerLink]="['/przepis-skladniki/new']">
+            <fa-icon [icon]="'utensils'"></fa-icon>
+            <span >
+            Dodaj wszystkie składniki do przepisu
             </span>
         </button>
     </h2>

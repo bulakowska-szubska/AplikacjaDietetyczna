@@ -1,5 +1,6 @@
 package com.vistula.aplikacja.service.impl;
 
+import com.vistula.aplikacja.domain.User;
 import com.vistula.aplikacja.service.PrzepisSkladnikiService;
 import com.vistula.aplikacja.domain.PrzepisSkladniki;
 import com.vistula.aplikacja.repository.PrzepisSkladnikiRepository;
@@ -51,6 +52,19 @@ public class PrzepisSkladnikiServiceImpl implements PrzepisSkladnikiService {
     public Page<PrzepisSkladniki> findAll(Pageable pageable) {
         log.debug("Request to get all PrzepisSkladnikis");
         return przepisSkladnikiRepository.findAll(pageable);
+    }
+
+    /**
+     * Get all the przepisSkladniki for one User.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PrzepisSkladniki> findAllByUser(Pageable pageable, Optional<User> user) {
+        log.debug("Request to get all PrzepisSkladniki for one User");
+        return przepisSkladnikiRepository.findAllByUser(pageable, user);
     }
 
 

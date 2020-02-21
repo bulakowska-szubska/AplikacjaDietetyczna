@@ -48,7 +48,7 @@ export class PrzepisSkladnikiComponent implements OnInit, OnDestroy {
 
   loadAll() {
     this.przepisSkladnikiService
-      .query({
+      .loadUserSkladnikiOnly({
         page: this.page - 1,
         size: this.itemsPerPage,
         sort: this.sort()

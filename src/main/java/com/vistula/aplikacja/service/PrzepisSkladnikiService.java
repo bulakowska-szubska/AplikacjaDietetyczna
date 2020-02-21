@@ -2,6 +2,7 @@ package com.vistula.aplikacja.service;
 
 import com.vistula.aplikacja.domain.PrzepisSkladniki;
 
+import com.vistula.aplikacja.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,6 +28,14 @@ public interface PrzepisSkladnikiService {
      * @return the list of entities.
      */
     Page<PrzepisSkladniki> findAll(Pageable pageable);
+
+    /**
+     * Get all the przepisSkladnikis.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<PrzepisSkladniki> findAllByUser(Pageable pageable, Optional<User> user);
 
 
     /**

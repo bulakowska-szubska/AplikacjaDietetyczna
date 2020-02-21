@@ -129,6 +129,23 @@ public class PrzepisSkladnikiResource {
     }
 
     /**
+     * {@code GET  /przepis-skladniki/only-user} : get all the przepisSkladniki for one user only.
+     *
+
+     * @param pageable the pagination information.
+
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of przepisSkladnikis in body.
+     */
+    @GetMapping("/przepis-skladniki/only-user")
+    public ResponseEntity<List<PrzepisSkladniki>> getAllPrzepisSkladnikiForOneUser(Pageable pageable, Principal principal) {
+        log.debug("REST request to get a page of PrzepisSkladniki for certain User");
+        Optional<User> user = userService.getUserWithAuthoritiesByLogin(principal.getName());
+        Page<PrzepisSkladniki> page = przepisSkladnikiService.findAllByUser(pageable, user);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
      * {@code GET  /przepis-skladnikis/:id} : get the "id" przepisSkladniki.
      *
      * @param id the id of the przepisSkladniki to retrieve.

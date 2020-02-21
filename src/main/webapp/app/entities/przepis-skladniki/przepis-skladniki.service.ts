@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<IPrzepisSkladniki[]>;
 export class PrzepisSkladnikiService {
   public resourceUrl = SERVER_API_URL + 'api/przepis-skladnikis';
   public resourceUrlSkladnikPrzepisForUser = SERVER_API_URL + 'api/przepis-skladniki-user';
+  public resourceUrlSkladnikPrzepisForUserOnly = SERVER_API_URL + 'api/przepis-skladniki/only-user';
 
   constructor(protected http: HttpClient) {}
 
@@ -45,6 +46,11 @@ export class PrzepisSkladnikiService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IPrzepisSkladniki[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  loadUserSkladnikiOnly(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IPrzepisSkladniki[]>(this.resourceUrlSkladnikPrzepisForUserOnly, { params: options, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<any>> {
