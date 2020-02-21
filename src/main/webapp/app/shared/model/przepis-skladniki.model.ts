@@ -5,6 +5,7 @@ export interface IPrzepisSkladniki {
   id?: number;
   ilosc?: number;
   kalorieIlosc?: number;
+  przepisId?: number;
   skladniki?: ISkladniki;
   user?: IUser;
 }
@@ -14,6 +15,7 @@ export class PrzepisSkladniki implements IPrzepisSkladniki {
     public id?: number,
     public ilosc?: number,
     public kalorieIlosc?: number,
+    public przepisId?: number,
     public skladniki?: ISkladniki,
     public user?: IUser
   ) {}

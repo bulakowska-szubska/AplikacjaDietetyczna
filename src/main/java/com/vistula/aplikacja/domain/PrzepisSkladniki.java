@@ -28,6 +28,9 @@ public class PrzepisSkladniki implements Serializable {
     @Column(name = "kalorie_ilosc")
     private Double kalorieIlosc;
 
+    @Column(name = "przepis_id")
+    private Long przepisId;
+
     @ManyToOne
     @JsonIgnoreProperties("przepisSkladnikis")
     private Skladniki skladniki;
@@ -69,6 +72,19 @@ public class PrzepisSkladniki implements Serializable {
 
     public void setKalorieIlosc(Double kalorieIlosc) {
         this.kalorieIlosc = kalorieIlosc;
+    }
+
+    public Long getPrzepisId() {
+        return przepisId;
+    }
+
+    public PrzepisSkladniki przepisId(Long przepisId) {
+        this.przepisId = przepisId;
+        return this;
+    }
+
+    public void setPrzepisId(Long przepisId) {
+        this.przepisId = przepisId;
     }
 
     public Skladniki getSkladniki() {
@@ -120,6 +136,7 @@ public class PrzepisSkladniki implements Serializable {
             "id=" + getId() +
             ", ilosc=" + getIlosc() +
             ", kalorieIlosc=" + getKalorieIlosc() +
+            ", przepisId=" + getPrzepisId() +
             "}";
     }
 }

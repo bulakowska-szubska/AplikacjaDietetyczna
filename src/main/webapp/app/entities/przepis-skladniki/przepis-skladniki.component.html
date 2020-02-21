@@ -21,6 +21,7 @@
             <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="ilosc"><span>Ilosc</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="kalorieIlosc"><span>Kalorie Ilosc</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="przepisId"><span>Przepis Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="skladniki.id"><span>Skladniki</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="user.login"><span>User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"></th>
@@ -31,6 +32,7 @@
                 <td><a [routerLink]="['/przepis-skladniki', przepisSkladniki.id, 'view' ]">{{przepisSkladniki.id}}</a></td>
                 <td>{{przepisSkladniki.ilosc}}</td>
                 <td>{{przepisSkladniki.kalorieIlosc}}</td>
+                <td>{{przepisSkladniki.przepisId}}</td>
                 <td>
                     <div *ngIf="przepisSkladniki.skladniki">
                         <a [routerLink]="['/skladniki', przepisSkladniki.skladniki?.id, 'view' ]" >{{przepisSkladniki.skladniki?.id}}</a>

@@ -40,6 +40,9 @@ public class PrzepisSkladnikiResourceIT {
     private static final Double DEFAULT_KALORIE_ILOSC = 1D;
     private static final Double UPDATED_KALORIE_ILOSC = 2D;
 
+    private static final Long DEFAULT_PRZEPIS_ID = 1L;
+    private static final Long UPDATED_PRZEPIS_ID = 2L;
+
     @Autowired
     private PrzepisSkladnikiRepository przepisSkladnikiRepository;
 
@@ -86,7 +89,8 @@ public class PrzepisSkladnikiResourceIT {
     public static PrzepisSkladniki createEntity(EntityManager em) {
         PrzepisSkladniki przepisSkladniki = new PrzepisSkladniki()
             .ilosc(DEFAULT_ILOSC)
-            .kalorieIlosc(DEFAULT_KALORIE_ILOSC);
+            .kalorieIlosc(DEFAULT_KALORIE_ILOSC)
+            .przepisId(DEFAULT_PRZEPIS_ID);
         return przepisSkladniki;
     }
     /**
@@ -98,7 +102,8 @@ public class PrzepisSkladnikiResourceIT {
     public static PrzepisSkladniki createUpdatedEntity(EntityManager em) {
         PrzepisSkladniki przepisSkladniki = new PrzepisSkladniki()
             .ilosc(UPDATED_ILOSC)
-            .kalorieIlosc(UPDATED_KALORIE_ILOSC);
+            .kalorieIlosc(UPDATED_KALORIE_ILOSC)
+            .przepisId(UPDATED_PRZEPIS_ID);
         return przepisSkladniki;
     }
 
@@ -124,6 +129,7 @@ public class PrzepisSkladnikiResourceIT {
         PrzepisSkladniki testPrzepisSkladniki = przepisSkladnikiList.get(przepisSkladnikiList.size() - 1);
         assertThat(testPrzepisSkladniki.getIlosc()).isEqualTo(DEFAULT_ILOSC);
         assertThat(testPrzepisSkladniki.getKalorieIlosc()).isEqualTo(DEFAULT_KALORIE_ILOSC);
+        assertThat(testPrzepisSkladniki.getPrzepisId()).isEqualTo(DEFAULT_PRZEPIS_ID);
     }
 
     @Test
@@ -158,7 +164,8 @@ public class PrzepisSkladnikiResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(przepisSkladniki.getId().intValue())))
             .andExpect(jsonPath("$.[*].ilosc").value(hasItem(DEFAULT_ILOSC.doubleValue())))
-            .andExpect(jsonPath("$.[*].kalorieIlosc").value(hasItem(DEFAULT_KALORIE_ILOSC.doubleValue())));
+            .andExpect(jsonPath("$.[*].kalorieIlosc").value(hasItem(DEFAULT_KALORIE_ILOSC.doubleValue())))
+            .andExpect(jsonPath("$.[*].przepisId").value(hasItem(DEFAULT_PRZEPIS_ID.intValue())));
     }
     
     @Test
@@ -173,7 +180,8 @@ public class PrzepisSkladnikiResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(przepisSkladniki.getId().intValue()))
             .andExpect(jsonPath("$.ilosc").value(DEFAULT_ILOSC.doubleValue()))
-            .andExpect(jsonPath("$.kalorieIlosc").value(DEFAULT_KALORIE_ILOSC.doubleValue()));
+            .andExpect(jsonPath("$.kalorieIlosc").value(DEFAULT_KALORIE_ILOSC.doubleValue()))
+            .andExpect(jsonPath("$.przepisId").value(DEFAULT_PRZEPIS_ID.intValue()));
     }
 
     @Test
@@ -198,7 +206,8 @@ public class PrzepisSkladnikiResourceIT {
         em.detach(updatedPrzepisSkladniki);
         updatedPrzepisSkladniki
             .ilosc(UPDATED_ILOSC)
-            .kalorieIlosc(UPDATED_KALORIE_ILOSC);
+            .kalorieIlosc(UPDATED_KALORIE_ILOSC)
+            .przepisId(UPDATED_PRZEPIS_ID);
 
         restPrzepisSkladnikiMockMvc.perform(put("/api/przepis-skladnikis")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -211,6 +220,7 @@ public class PrzepisSkladnikiResourceIT {
         PrzepisSkladniki testPrzepisSkladniki = przepisSkladnikiList.get(przepisSkladnikiList.size() - 1);
         assertThat(testPrzepisSkladniki.getIlosc()).isEqualTo(UPDATED_ILOSC);
         assertThat(testPrzepisSkladniki.getKalorieIlosc()).isEqualTo(UPDATED_KALORIE_ILOSC);
+        assertThat(testPrzepisSkladniki.getPrzepisId()).isEqualTo(UPDATED_PRZEPIS_ID);
     }
 
     @Test

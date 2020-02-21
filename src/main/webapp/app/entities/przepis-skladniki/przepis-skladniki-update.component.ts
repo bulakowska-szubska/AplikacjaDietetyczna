@@ -28,6 +28,7 @@ export class PrzepisSkladnikiUpdateComponent implements OnInit {
     id: [],
     ilosc: [],
     kalorieIlosc: [],
+    przepisId: [],
     skladniki: [],
     user: []
   });
@@ -59,6 +60,7 @@ export class PrzepisSkladnikiUpdateComponent implements OnInit {
       id: przepisSkladniki.id,
       ilosc: przepisSkladniki.ilosc,
       kalorieIlosc: przepisSkladniki.kalorieIlosc,
+      przepisId: przepisSkladniki.przepisId,
       skladniki: przepisSkladniki.skladniki,
       user: przepisSkladniki.user
     });
@@ -84,6 +86,7 @@ export class PrzepisSkladnikiUpdateComponent implements OnInit {
       id: this.editForm.get(['id']).value,
       ilosc: this.editForm.get(['ilosc']).value,
       kalorieIlosc: this.editForm.get(['kalorieIlosc']).value,
+      przepisId: this.editForm.get(['przepisId']).value,
       skladniki: this.editForm.get(['skladniki']).value,
       user: this.editForm.get(['user']).value
     };
