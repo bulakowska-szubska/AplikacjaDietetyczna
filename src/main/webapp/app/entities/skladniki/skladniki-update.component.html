@@ -15,11 +15,10 @@
                            formControlName="nazwa"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_zdjecie">Zdjecie</label>
+                    <label class="form-control-label" for="field_zdjecie">Zdjęcie</label>
                     <div>
                         <img [src]="'data:' + editForm.get('zdjecieContentType').value + ';base64,' + editForm.get('zdjecie').value" style="max-height: 100px;" *ngIf="editForm.get('zdjecie').value" alt="skladniki image"/>
                         <div *ngIf="editForm.get('zdjecie').value" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{editForm.get('zdjecieContentType').value}}, {{byteSize(editForm.get('zdjecie').value)}}</span>
                             <button type="button" (click)="clearInputImage('zdjecie', 'zdjecieContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
                             </button>

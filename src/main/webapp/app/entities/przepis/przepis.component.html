@@ -1,10 +1,10 @@
 <div>
     <h2 id="page-heading">
-        <span>Przepis</span>
+        <span>Katalog Przepisów</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-przepis" [routerLink]="['/przepis/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create a new Przepis
+            Dodaj nowy przepis
             </span>
         </button>
     </h2>
@@ -12,34 +12,29 @@
     <jhi-alert></jhi-alert>
     <br/>
     <div class="alert alert-warning" *ngIf="przepis?.length === 0">
-        <span>No przepis found</span>
+        <span>Nie znaleziono żadnych przepisów</span>
     </div>
     <div class="table-responsive" *ngIf="przepis?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="nazwa"><span>Nazwa</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="typPrzepisu"><span>Typ Przepisu</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="zdjecie"><span>Zdjecie</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="opis"><span>Opis</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="kalorieSuma"><span>Kalorie Suma</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="user.login"><span>User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="zdjecie"><span>Zdjęcie poglądowe</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="kalorieSuma"><span>Suma kalorii [kcal]</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="user.login"><span>Dodane przez</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let przepis of przepis ;trackBy: trackId">
-                <td><a [routerLink]="['/przepis', przepis.id, 'view' ]">{{przepis.id}}</a></td>
                 <td>{{przepis.nazwa}}</td>
                 <td>{{przepis.typPrzepisu}}</td>
                 <td>
                     <a *ngIf="przepis.zdjecie" (click)="openFile(przepis.zdjecieContentType, przepis.zdjecie)">
                         <img [src]="'data:' + przepis.zdjecieContentType + ';base64,' + przepis.zdjecie" style="max-height: 30px;" alt="przepis image"/>
                     </a>
-                    <span *ngIf="przepis.zdjecie">{{przepis.zdjecieContentType}}, {{byteSize(przepis.zdjecie)}}</span>
                 </td>
-                <td>{{przepis.opis}}</td>
                 <td>{{przepis.kalorieSuma}}</td>
                 <td>
                     {{przepis.user?.login}}
@@ -50,18 +45,20 @@
                                 [routerLink]="['/przepis', przepis.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
+                            <span class="d-none d-md-inline">Szczegóły</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/przepis', przepis.id, 'edit']"
+                                *jhiHasAnyAuthority="'ROLE_ADMIN'"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
+                            <span class="d-none d-md-inline">Edycja</span>
                         </button>
                         <button type="submit" (click)="delete(przepis)"
+                                *jhiHasAnyAuthority="'ROLE_ADMIN'"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
+                            <span class="d-none d-md-inline">Usuń</span>
                         </button>
                     </div>
                 </td>

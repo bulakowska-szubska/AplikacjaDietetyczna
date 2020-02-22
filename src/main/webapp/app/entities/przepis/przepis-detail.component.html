@@ -1,36 +1,31 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="przepis">
-            <h2><span>Przepis</span> {{przepis.id}}</h2>
+            <h2><span>Nazwa przepisu: </span> {{przepis.nazwa}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span>Nazwa</span></dt>
-                <dd>
-                    <span>{{przepis.nazwa}}</span>
-                </dd>
                 <dt><span>Typ Przepisu</span></dt>
                 <dd>
                     <span>{{przepis.typPrzepisu}}</span>
                 </dd>
-                <dt><span>Zdjecie</span></dt>
+                <dt><span>Zdjęcie</span></dt>
                 <dd>
                     <div *ngIf="przepis.zdjecie">
                         <a (click)="openFile(przepis.zdjecieContentType, przepis.zdjecie)">
                             <img [src]="'data:' + przepis.zdjecieContentType + ';base64,' + przepis.zdjecie" style="max-width: 100%;" alt="przepis image"/>
                         </a>
-                        {{przepis.zdjecieContentType}}, {{byteSize(przepis.zdjecie)}}
                     </div>
                 </dd>
-                <dt><span>Opis</span></dt>
+                <dt><span>Opis przepisu</span></dt>
                 <dd>
                     <span>{{przepis.opis}}</span>
                 </dd>
-                <dt><span>Kalorie Suma</span></dt>
+                <dt><span>Kaloryczność przepisu [kcal]</span></dt>
                 <dd>
                     <span>{{przepis.kalorieSuma}}</span>
                 </dd>
-                <dt><span>User</span></dt>
+                <dt><span>Dodane przez</span></dt>
                 <dd>
                     {{przepis.user?.login}}
                 </dd>
@@ -39,13 +34,14 @@
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span>Wróć</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/przepis', przepis.id, 'edit']"
+                    *jhiHasAnyAuthority="'ROLE_ADMIN'"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span>Edytuj</span>
             </button>
         </div>
     </div>

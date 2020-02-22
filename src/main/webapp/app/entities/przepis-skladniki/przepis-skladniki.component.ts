@@ -12,7 +12,7 @@ import { PrzepisSkladnikiService } from './przepis-skladniki.service';
 import { PrzepisSkladnikiDeleteDialogComponent } from './przepis-skladniki-delete-dialog.component';
 import { IPrzepis, Przepis } from 'app/shared/model/przepis.model';
 import { PrzepisService } from 'app/entities/przepis/przepis.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'jhi-przepis-skladniki',

@@ -1,51 +1,42 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="skladniki">
-            <h2><span>Skladniki</span> {{skladniki.id}}</h2>
+            <h2><span>Składnik: </span> {{skladniki.nazwa}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span>Nazwa</span></dt>
-                <dd>
-                    <span>{{skladniki.nazwa}}</span>
-                </dd>
-                <dt><span>Zdjecie</span></dt>
                 <dd>
                     <div *ngIf="skladniki.zdjecie">
                         <a (click)="openFile(skladniki.zdjecieContentType, skladniki.zdjecie)">
                             <img [src]="'data:' + skladniki.zdjecieContentType + ';base64,' + skladniki.zdjecie" style="max-width: 100%;" alt="skladniki image"/>
                         </a>
-                        {{skladniki.zdjecieContentType}}, {{byteSize(skladniki.zdjecie)}}
                     </div>
                 </dd>
-                <dt><span>Jednostka</span></dt>
+                <dt><span>Jednostka:</span></dt>
                 <dd>
                     <span>{{skladniki.jednostka}}</span>
                 </dd>
-                <dt><span>Kategoria</span></dt>
+                <dt><span>Kategoria składnika:</span></dt>
                 <dd>
                     <span>{{skladniki.kategoria}}</span>
                 </dd>
-                <dt><span>Kalorie Sto</span></dt>
+                <dt><span>Kalorie w 100 gramach/mililitrach lub 1 sztuce:</span></dt>
                 <dd>
                     <span>{{skladniki.kalorieSto}}</span>
-                </dd>
-                <dt><span>Kalorie Jednostka</span></dt>
-                <dd>
-                    <span>{{skladniki.kalorieJednostka}}</span>
                 </dd>
             </dl>
 
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Wróć</span>
             </button>
 
             <button type="button"
+                    *jhiHasAnyAuthority="'ROLE_ADMIN'"
                     [routerLink]="['/skladniki', skladniki.id, 'edit']"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edytuj</span>
             </button>
         </div>
     </div>

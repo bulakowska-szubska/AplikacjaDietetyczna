@@ -68,7 +68,7 @@
                     [disabled]="editForm.invalid"
                     class="btn btn-primary"
                     [routerLink]="['/przepis']">
-                <fa-icon [icon]="'save'"></fa-icon><span>Dodaj przepis</span>
+                <fa-icon [icon]="'utensils'"></fa-icon><span>Dodaj przepis</span>
             </button>
         </div>
 
@@ -76,39 +76,33 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="ilosc"><span>Ilość</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="kalorieIlosc"><span>Ilość Kalorii</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="przepisId"><span>Id Przepisu</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="skladniki.id"><span>Składnik</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="user.login"><span>User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="ilosc"><span>Ilość</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="kalorieIlosc"><span>Suma Kalorii Składnika</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let przepisSkladniki of przepisSkladnikis ;trackBy: trackId">
-                <td><a [routerLink]="['/przepis-skladniki', przepisSkladniki.id, 'view' ]">{{przepisSkladniki.id}}</a></td>
-                <td>{{przepisSkladniki.ilosc}}</td>
-                <td>{{przepisSkladniki.kalorieIlosc}}</td>
-                <td>{{przepisSkladniki.przepisId}}</td>
                 <td>
                     <div *ngIf="przepisSkladniki.skladniki">
-                        <a [routerLink]="['/skladniki', przepisSkladniki.skladniki?.id, 'view' ]" >{{przepisSkladniki.skladniki?.id}}</a>
+                        <a [routerLink]="['/skladniki', przepisSkladniki.skladniki?.id, 'view' ]" >{{przepisSkladniki.skladniki?.nazwa}}</a>
                     </div>
                 </td>
-                <td>
-                    {{przepisSkladniki.user?.login}}
-                </td>
+                <td>{{przepisSkladniki.ilosc}}</td>
+                <td>{{przepisSkladniki.kalorieIlosc}}</td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"
                                 [routerLink]="['/przepis-skladniki', przepisSkladniki.id, 'view' ]"
+                                *jhiHasAnyAuthority="'ROLE_ADMIN'"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline">Zobacz</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/przepis-skladniki', przepisSkladniki.id, 'edit']"
+                                *jhiHasAnyAuthority="'ROLE_ADMIN'"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline">Edytuj</span>
