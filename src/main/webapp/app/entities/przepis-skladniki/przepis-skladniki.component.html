@@ -10,32 +10,72 @@
             Dodaj nowy składnik przepisu
             </span>
         </button>
-        <button id="dodaj-do-przepisu"
-                *jhiHasAnyAuthority="'ROLE_USER'"
-                class="btn btn-success float-right jh-create-entity create-przepis-skladniki"
-                (click)="dodajPrzepis()"
-                [routerLink]="['/przepis']">
-            <fa-icon [icon]="'utensils'"></fa-icon>
-            <span >
-            Dodaj wszystkie składniki do przepisu
-            </span>
-        </button>
     </h2>
     <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="alert alert-warning" *ngIf="przepisSkladnikis?.length === 0">
-        <span>No przepisSkladnikis found</span>
+        <span>Nie znaleziono składników przepisu!</span>
     </div>
     <div class="table-responsive" *ngIf="przepisSkladnikis?.length > 0">
+    <form name="editForm" role="form" novalidate (ngSubmit)="dodajPrzepis()" [formGroup]="editForm">
+        <div class="form-group">
+            <div class="form-group">
+                <label class="form-control-label" for="field_nazwa">Wpisz nazwę</label>
+                <input type="text" class="form-control" name="nazwa" id="field_nazwa"
+                       formControlName="nazwa"/>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" for="field_typPrzepisu">Ustaw typ przepisu</label>
+                <select class="form-control" name="typPrzepisu" formControlName="typPrzepisu" id="field_typPrzepisu">
+                    <option value="WEGETARIANSKI">WEGETARIAŃSKI</option>
+                    <option value="WEGANSKI">WEGAŃSKI</option>
+                    <option value="BEZGLUTENOWY">BEZGLUTENOWY</option>
+                    <option value="STANDARDOWY">STANDARDOWY</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" for="field_zdjecie">Dodaj zdjęcie</label>
+                <div>
+                    <img [src]="'data:' + editForm.get('zdjecieContentType').value + ';base64,' + editForm.get('zdjecie').value" style="max-height: 100px;" *ngIf="editForm.get('zdjecie').value" alt="przepis image"/>
+                    <div *ngIf="editForm.get('zdjecie').value" class="form-text text-danger clearfix">
+                        <span class="pull-left">{{editForm.get('zdjecieContentType').value}}, {{byteSize(editForm.get('zdjecie').value)}}</span>
+                        <button type="button" (click)="clearInputImage('zdjecie', 'zdjecieContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                        </button>
+                    </div>
+                    <input type="file" id="file_zdjecie" (change)="setFileData($event, 'zdjecie', true)" accept="image/*"/>
+                </div>
+                <input type="hidden" class="form-control" name="zdjecie" id="field_zdjecie"
+                       formControlName="zdjecie"/>
+                <input type="hidden" class="form-control" name="zdjecieContentType" id="field_zdjecieContentType"
+                       formControlName="zdjecieContentType" />
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" for="field_opis">Opis</label>
+                <input type="text" class="form-control" name="opis" id="field_opis"
+                       formControlName="opis"/>
+            </div>
+        </div>
+        <div>
+            <button type="submit"
+                    id="save-entity"
+                    [disabled]="editForm.invalid"
+                    class="btn btn-primary"
+                    [routerLink]="['/przepis']">
+                <fa-icon [icon]="'save'"></fa-icon><span>Dodaj przepis</span>
+            </button>
+        </div>
+
+    </form>
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="ilosc"><span>Ilosc</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="kalorieIlosc"><span>Kalorie Ilosc</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="przepisId"><span>Przepis Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="skladniki.id"><span>Skladniki</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="ilosc"><span>Ilość</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="kalorieIlosc"><span>Ilość Kalorii</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="przepisId"><span>Id Przepisu</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="skladniki.id"><span>Składnik</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="user.login"><span>User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"></th>
             </tr>
@@ -60,18 +100,18 @@
                                 [routerLink]="['/przepis-skladniki', przepisSkladniki.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
+                            <span class="d-none d-md-inline">Zobacz</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/przepis-skladniki', przepisSkladniki.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
+                            <span class="d-none d-md-inline">Edytuj</span>
                         </button>
                         <button type="submit" (click)="delete(przepisSkladniki)"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
+                            <span class="d-none d-md-inline">Usuń</span>
                         </button>
                     </div>
                 </td>
