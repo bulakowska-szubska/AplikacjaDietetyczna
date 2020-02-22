@@ -39,11 +39,26 @@ public interface PrzepisSkladnikiService {
     Page<PrzepisSkladniki> findAllByUser(Pageable pageable, Optional<User> user);
 
     /**
+     * Get all the przepisSkladnikis where PrzepisId is null.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities where PrzepisId is null and User is principal.getName().
+     */
+    Page<PrzepisSkladniki> findAllByUserAndPrzepisIdIsNull(Pageable pageable, Optional<User> user);
+
+    /**
      * Get list of the przepisSkladniki from User.
      *
      * @return the list of przepisSkladniki.
      */
     List<PrzepisSkladniki> findAllByUser(Optional<User> user);
+
+    /**
+     * Get list of the przepisSkladniki from User where PrzepisId is null.
+     *
+     * @return the list of przepisSkladniki with PrzepisId is null.
+     */
+    List<PrzepisSkladniki> findAllByUserAndPrzepisIdIsNull(Optional<User> user);
 
 
     /**

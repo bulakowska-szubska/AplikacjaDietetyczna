@@ -140,7 +140,7 @@ public class PrzepisSkladnikiResource {
     public ResponseEntity<List<PrzepisSkladniki>> getAllPrzepisSkladnikiForOneUser(Pageable pageable, Principal principal) {
         log.debug("REST request to get a page of PrzepisSkladniki for certain User");
         Optional<User> user = userService.getUserWithAuthoritiesByLogin(principal.getName());
-        Page<PrzepisSkladniki> page = przepisSkladnikiService.findAllByUser(pageable, user);
+        Page<PrzepisSkladniki> page = przepisSkladnikiService.findAllByUserAndPrzepisIdIsNull(pageable, user);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

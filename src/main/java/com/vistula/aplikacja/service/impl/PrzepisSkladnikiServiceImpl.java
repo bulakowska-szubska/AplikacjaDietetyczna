@@ -69,6 +69,19 @@ public class PrzepisSkladnikiServiceImpl implements PrzepisSkladnikiService {
     }
 
     /**
+     * Get all the przepisSkladniki for one User where ZamowienieId is null.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PrzepisSkladniki> findAllByUserAndPrzepisIdIsNull(Pageable pageable, Optional<User> user) {
+        log.debug("Request to get all PrzepisSkladniki for one User");
+        return przepisSkladnikiRepository.findAllByUserAndPrzepisIdIsNull(pageable, user);
+    }
+
+    /**
      * Get list of the przepisSkladniki for one User.
      *
      * @return the list of przepisSkladniki.
@@ -78,6 +91,18 @@ public class PrzepisSkladnikiServiceImpl implements PrzepisSkladnikiService {
     public List<PrzepisSkladniki> findAllByUser(Optional<User> user) {
         log.debug("Request to get list of the PrzepisSkladniki for one User");
         return przepisSkladnikiRepository.findAllByUser(user);
+    }
+
+    /**
+     * Get list of the przepisSkladniki for one User with PrzepisId is null.
+     *
+     * @return the list of przepisSkladniki with PrzepisId is null.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<PrzepisSkladniki> findAllByUserAndPrzepisIdIsNull(Optional<User> user) {
+        log.debug("Request to get list of the PrzepisSkladniki for one User");
+        return przepisSkladnikiRepository.findAllByUserAndPrzepisIdIsNull(user);
     }
 
 

@@ -97,7 +97,7 @@ public class PrzepisResource {
             przepis.setUser(user.get());
         }
 
-        List<PrzepisSkladniki> przepisSkladnikiList = przepisSkladnikiService.findAllByUser(user);
+        List<PrzepisSkladniki> przepisSkladnikiList = przepisSkladnikiService.findAllByUserAndPrzepisIdIsNull(user);
 
         for (PrzepisSkladniki przepisSkladniki: przepisSkladnikiList){
             PrzepisSkladniki przepisSkladnik = new PrzepisSkladniki();
