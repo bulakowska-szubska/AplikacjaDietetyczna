@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
@@ -7,6 +7,8 @@ import { PrzepisSkladnikiService } from 'app/entities/przepis-skladniki/przepis-
 import { IPrzepisSkladniki } from 'app/shared/model/przepis-skladniki.model';
 import { HttpResponse } from '@angular/common/http';
 
+import * as jsPDF from 'jspdf';
+
 @Component({
   selector: 'jhi-przepis-detail',
   templateUrl: './przepis-detail.component.html'
@@ -14,6 +16,8 @@ import { HttpResponse } from '@angular/common/http';
 export class PrzepisDetailComponent implements OnInit {
   przepis: IPrzepis;
   przepisSkladnikiArr: any[];
+
+  @ViewChild('content', { static: false }) content: ElementRef;
 
   constructor(
     protected dataUtils: JhiDataUtils,
@@ -47,5 +51,19 @@ export class PrzepisDetailComponent implements OnInit {
 
   protected onSuccessSingle(przepisSkladniki: IPrzepisSkladniki[]) {
     this.przepisSkladnikiArr = przepisSkladniki;
+  }
+
+  public downloadPDF(nazwaPrzepis: string) {
+    const doc = new jsPDF();
+    const content = this.content.nativeElement;
+
+    doc.fromHTML(content.innerHTML, 15, 15, {
+      width: 190
+    });
+    doc.save(nazwaPrzepis + '.pdf');
+  }
+
+  print() {
+    window.print();
   }
 }

@@ -13,10 +13,13 @@
                         </a>
                     </div>
                 </dd>
-                <dt><span>Składniki</span></dt>
+                <div id="content" #content>
+                <dt><span>Lista zakupowa:</span></dt>
                 <ng-container *ngFor="let przepisSkladnik of przepisSkladnikiArr">
                         <li>{{przepisSkladnik.ilosc}} {{przepisSkladnik.skladniki.jednostka}} {{przepisSkladnik.skladniki.nazwa}}</li>
                 </ng-container>
+                </div>
+                <button (click)="downloadPDF(przepis.nazwa)">Pobierz listę składników</button>
                 <dt><span>Typ Przepisu</span></dt>
                 <dd>
                     <span>{{przepis.typPrzepisu}}</span>
@@ -46,6 +49,11 @@
                     *jhiHasAnyAuthority="'ROLE_ADMIN'"
                     class="btn btn-primary">
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span>Edytuj</span>
+            </button>
+            <button type="button"
+                    class="btn btn-dark"
+                    (click)="print()">
+                <fa-icon [icon]="'print'"></fa-icon><span>Drukuj</span>
             </button>
         </div>
     </div>
