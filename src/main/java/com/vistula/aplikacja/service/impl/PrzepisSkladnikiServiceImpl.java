@@ -107,6 +107,18 @@ public class PrzepisSkladnikiServiceImpl implements PrzepisSkladnikiService {
 
 
     /**
+     * Get list of the przepisSkladniki for one User with PrzepisId is null.
+     *
+     * @return the list of przepisSkladniki with PrzepisId is null.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<PrzepisSkladniki>> findAllByPrzepisId(Long id) {
+        log.debug("Request to get list of the PrzepisSkladniki for przepisId");
+        return przepisSkladnikiRepository.findAllByPrzepisId(id);
+    }
+
+    /**
      * Get one przepisSkladniki by id.
      *
      * @param id the id of the entity.

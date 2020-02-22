@@ -60,6 +60,12 @@ public interface PrzepisSkladnikiService {
      */
     List<PrzepisSkladniki> findAllByUserAndPrzepisIdIsNull(Optional<User> user);
 
+    /**
+     * Get list of the przepisSkladniki by PrzepisId.
+     *
+     * @return the list of przepisSkladniki with PrzepisId.
+     */
+    Optional<List<PrzepisSkladniki>> findAllByPrzepisId(Long id);
 
     /**
      * Get the "id" przepisSkladniki.

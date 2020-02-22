@@ -15,6 +15,7 @@ export class PrzepisSkladnikiService {
   public resourceUrl = SERVER_API_URL + 'api/przepis-skladnikis';
   public resourceUrlSkladnikPrzepisForUser = SERVER_API_URL + 'api/przepis-skladniki-user';
   public resourceUrlSkladnikPrzepisForUserOnly = SERVER_API_URL + 'api/przepis-skladniki/only-user';
+  public resourceUrlAllSkladnikPrzepisByPrzepisId = SERVER_API_URL + 'api/przepis-skladniki-by-przepis-id';
 
   constructor(protected http: HttpClient) {}
 
@@ -51,6 +52,10 @@ export class PrzepisSkladnikiService {
   loadUserSkladnikiOnly(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IPrzepisSkladniki[]>(this.resourceUrlSkladnikPrzepisForUserOnly, { params: options, observe: 'response' });
+  }
+
+  getPrzepisSkladnikiByPrzepisId(przepisId: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IPrzepisSkladniki[]>(`${this.resourceUrlAllSkladnikPrzepisByPrzepisId}/${przepisId}`, { observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<any>> {

@@ -11,6 +11,7 @@ import { przepisRoute } from './przepis.route';
 @NgModule({
   imports: [AplikacjaDietetycznaSharedModule, RouterModule.forChild(przepisRoute)],
   declarations: [PrzepisComponent, PrzepisDetailComponent, PrzepisUpdateComponent, PrzepisDeleteDialogComponent],
+  providers: [PrzepisDetailComponent],
   entryComponents: [PrzepisDeleteDialogComponent]
 })
 export class AplikacjaDietetycznaPrzepisModule {}

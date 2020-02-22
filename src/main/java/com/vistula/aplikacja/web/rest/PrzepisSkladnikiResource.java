@@ -146,6 +146,19 @@ public class PrzepisSkladnikiResource {
     }
 
     /**
+     * {@code GET  /przepis-skladniki-by-przepis-id} : get all the przepisSkladniki for przepisId
+     *
+
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of przepisSkladnikis in body.
+     */
+    @GetMapping("/przepis-skladniki-by-przepis-id/{przepisId}")
+    public ResponseEntity<List<PrzepisSkladniki>> getAllPrzepisSkladnikiByPrzepisId(@PathVariable Long przepisId) {
+        log.debug("REST request to get a page of PrzepisSkladniki for certain przepisId");
+        Optional<List<PrzepisSkladniki>> przepisSkladnikiList = przepisSkladnikiService.findAllByPrzepisId(przepisId);
+        return ResponseUtil.wrapOrNotFound(przepisSkladnikiList);
+    }
+
+    /**
      * {@code GET  /przepis-skladnikis/:id} : get the "id" przepisSkladniki.
      *
      * @param id the id of the przepisSkladniki to retrieve.

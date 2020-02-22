@@ -10,6 +10,8 @@ import { IPrzepis } from 'app/shared/model/przepis.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PrzepisService } from './przepis.service';
 import { PrzepisDeleteDialogComponent } from './przepis-delete-dialog.component';
+import { PrzepisDetailComponent } from 'app/entities/przepis/przepis-detail.component';
+import { IPrzepisSkladniki } from 'app/shared/model/przepis-skladniki.model';
 
 @Component({
   selector: 'jhi-przepis',
@@ -17,6 +19,7 @@ import { PrzepisDeleteDialogComponent } from './przepis-delete-dialog.component'
 })
 export class PrzepisComponent implements OnInit, OnDestroy {
   przepis: IPrzepis[];
+  przepisSkladniki: IPrzepisSkladniki[];
   error: any;
   success: any;
   eventSubscriber: Subscription;
@@ -36,7 +39,8 @@ export class PrzepisComponent implements OnInit, OnDestroy {
     protected dataUtils: JhiDataUtils,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected przepisDetailComponent: PrzepisDetailComponent
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -129,5 +133,9 @@ export class PrzepisComponent implements OnInit, OnDestroy {
     this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     this.przepis = data;
+  }
+
+  getAllPrzepisSkladniki(przepisId: number) {
+    this.przepisDetailComponent.getAllSkladnikiPrzepis(przepisId);
   }
 }
