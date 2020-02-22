@@ -5,18 +5,21 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt>{{przepis.id}}</dt>
-                <dt><span>Typ Przepisu</span></dt>
-                <dd>
-                    <span>{{przepis.typPrzepisu}}</span>
-                </dd>
-                <dt><span>Zdjęcie</span></dt>
+                <dt><span>Zdjęcie poglądowe</span></dt>
                 <dd>
                     <div *ngIf="przepis.zdjecie">
                         <a (click)="openFile(przepis.zdjecieContentType, przepis.zdjecie)">
                             <img [src]="'data:' + przepis.zdjecieContentType + ';base64,' + przepis.zdjecie" style="max-width: 100%;" alt="przepis image"/>
                         </a>
                     </div>
+                </dd>
+                <dt><span>Składniki</span></dt>
+                <ng-container *ngFor="let przepisSkladnik of przepisSkladnikiArr">
+                        <li>{{przepisSkladnik.ilosc}} {{przepisSkladnik.skladniki.jednostka}} {{przepisSkladnik.skladniki.nazwa}}</li>
+                </ng-container>
+                <dt><span>Typ Przepisu</span></dt>
+                <dd>
+                    <span>{{przepis.typPrzepisu}}</span>
                 </dd>
                 <dt><span>Opis przepisu</span></dt>
                 <dd>

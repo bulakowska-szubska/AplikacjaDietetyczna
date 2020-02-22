@@ -114,6 +114,7 @@ public class PrzepisResource {
             PrzepisSkladniki przepisSkladnik = new PrzepisSkladniki();
 
             przepisSkladnik.setKalorieIlosc(przepisSkladniki.getKalorieIlosc());
+            przepisSkladnik.setIlosc(przepisSkladniki.getIlosc());
             przepisSkladnik.setUser(przepisSkladniki.getUser());
             przepisSkladnik.setSkladniki(przepisSkladniki.getSkladniki());
             przepisSkladnik.setPrzepisId(przepisId);

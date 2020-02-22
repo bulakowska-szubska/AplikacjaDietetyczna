@@ -5,6 +5,7 @@ import { JhiDataUtils } from 'ng-jhipster';
 import { IPrzepis } from 'app/shared/model/przepis.model';
 import { PrzepisSkladnikiService } from 'app/entities/przepis-skladniki/przepis-skladniki.service';
 import { IPrzepisSkladniki } from 'app/shared/model/przepis-skladniki.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-przepis-detail',
@@ -12,7 +13,7 @@ import { IPrzepisSkladniki } from 'app/shared/model/przepis-skladniki.model';
 })
 export class PrzepisDetailComponent implements OnInit {
   przepis: IPrzepis;
-  przepisSkladniki: IPrzepisSkladniki[];
+  przepisSkladnikiArr: any[];
 
   constructor(
     protected dataUtils: JhiDataUtils,
@@ -39,6 +40,12 @@ export class PrzepisDetailComponent implements OnInit {
   }
 
   getAllSkladnikiPrzepis(przepisId: number) {
-    this.przepisSkladnikiService.getPrzepisSkladnikiByPrzepisId(przepisId).subscribe();
+    this.przepisSkladnikiService
+      .getPrzepisSkladnikiByPrzepisId(przepisId)
+      .subscribe((res: HttpResponse<IPrzepisSkladniki[]>) => this.onSuccessSingle(res.body));
+  }
+
+  protected onSuccessSingle(przepisSkladniki: IPrzepisSkladniki[]) {
+    this.przepisSkladnikiArr = przepisSkladniki;
   }
 }

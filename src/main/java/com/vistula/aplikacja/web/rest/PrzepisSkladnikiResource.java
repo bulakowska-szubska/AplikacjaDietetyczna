@@ -24,6 +24,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,7 +147,7 @@ public class PrzepisSkladnikiResource {
     }
 
     /**
-     * {@code GET  /przepis-skladniki-by-przepis-id} : get all the przepisSkladniki for przepisId
+     * {@code GET  /przepis-skladniki-by-przepis-id/przepisId} : get all the przepisSkladniki for przepisId
      *
 
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of przepisSkladnikis in body.
@@ -155,7 +156,7 @@ public class PrzepisSkladnikiResource {
     public ResponseEntity<List<PrzepisSkladniki>> getAllPrzepisSkladnikiByPrzepisId(@PathVariable Long przepisId) {
         log.debug("REST request to get a page of PrzepisSkladniki for certain przepisId");
         Optional<List<PrzepisSkladniki>> przepisSkladnikiList = przepisSkladnikiService.findAllByPrzepisId(przepisId);
-        return ResponseUtil.wrapOrNotFound(przepisSkladnikiList);
+        return przepisSkladnikiList.isPresent() ? ResponseEntity.ok(przepisSkladnikiList.get()) : ResponseEntity.ok(new ArrayList<>());
     }
 
     /**
